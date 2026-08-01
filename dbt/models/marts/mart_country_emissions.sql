@@ -1,0 +1,22 @@
+select
+	country,
+	iso_code,
+	year,
+	population,
+	gdp,
+	co2,
+	co2_per_capita,
+	total_ghg,
+	methane,
+	nitrous_oxide,
+	coal_co2,
+	oil_co2,
+	gas_co2,
+	cement_co2,
+	flaring_co2,
+	other_industry_co2,
+	land_use_change_co2,
+	coal_share_pct,
+	oil_share_pct,
+	gas_share_pct
+from {{ ref('int_country_yearly_summary') }}

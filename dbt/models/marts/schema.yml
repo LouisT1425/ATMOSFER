@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: mart_country_emissions
+    description: "Table finale par pays/année, consommée par les routes /compare et /top-countries"
+    columns:
+      - name: country
+        tests:
+          - not_null
+      - name: year
+        tests:
+          - not_null
+
+  - name: mart_global_emissions
+    description: "Totaux mondiaux par année, consommée par la route /global_emissions"
+    columns:
+      - name: year
+        tests:
+          - not_null
+          - unique
