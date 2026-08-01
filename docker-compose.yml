@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: atmosfer_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: atmosfer
+      POSTGRES_PASSWORD: atmosfer_dev
+      POSTGRES_DB: atmosfer
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

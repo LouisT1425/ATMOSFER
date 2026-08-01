@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+logs/
+
+# Variables d'environnement
+.env
+*.env
+
+# Données
+data/raw/*.csv
+
+# OS / éditeurs
+.DS_Store
+.vscode/
+*.swp
