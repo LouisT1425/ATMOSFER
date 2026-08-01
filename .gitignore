@@ -13,6 +13,7 @@ logs/
 # Variables d'environnement
 .env
 *.env
+dbt/profiles.yml
 
 # Données
 data/raw/*.csv
