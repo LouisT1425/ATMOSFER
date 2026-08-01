@@ -1,0 +1,319 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+@import "@fontsource/jetbrains-mono/700.css";
+@import "@fontsource/atkinson-hyperlegible/400.css";
+@import "@fontsource/atkinson-hyperlegible/700.css";
+@import "@fontsource/atkinson-hyperlegible/400-italic.css";
+
+/* ---------------------------------------------------------------------
+   ATMOSFER design system — "lecture infrarouge".
+
+   CO2 is measured by infrared absorption (NDIR sensors): a beam crosses
+   the gas, the gas absorbs a specific IR band, the absorption gives the
+   concentration. That's the referent for this palette and its one
+   signature motif (the spectral strip) — not "eco green", not a generic
+   dark-mode neon.
+
+   Named palette:
+     Graphite         #1C2320  dark-mode surface — elemental carbon / instrument casing
+     Vapeur           #EEF0EC  light-mode surface — water vapour / haze, not cream
+     Signal Ambre     #E8A33D  primary accent — NDIR sensor LED / warm readout
+     Infrarouge Profond #8A2E1E  "high concentration" pole — ember, thermal-hot
+     Teal Ozone       #2E7D6B  "low concentration" pole — stratospheric ozone / oxidised
+                                brass instrumentation, not foliage
+     Brume            #8C948F  muted text / hairlines — quiet instrument-panel neutral
+
+   Series / sequential / status stay the validated dataviz palette (CVD-safe,
+   contrast-checked) — those encode data identity, not brand, so the reskin
+   doesn't touch them. The diverging map ramp is re-hued to Teal Ozone →
+   Signal Ambre → Infrarouge Profond to match the signature motif.
+   --------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --page-plane: #eef0ec;
+  --surface-1: #f5f6f2;
+  --surface-2: #e4e7e1;
+  --text-primary: #1c2320;
+  --text-secondary: #4b524b;
+  --text-muted: #767e77;
+  --gridline: #d7dbd3;
+  --baseline: #b9bfb5;
+  --border: #d3d7cf;
+  --border-strong: #b3b9ae;
+  --overlay-scrim: rgba(28, 35, 32, 0.5);
+
+  --accent: #c97e1f;
+  --accent-gold: #e8a33d;
+  --accent-cool: #2e7d6b;
+  --on-gold: #1c2320;
+
+  --graphite: #1c2320;
+  --infrared: #8a2e1e;
+  --ozone: #2e7d6b;
+
+  --success: #256b57;
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #a13a26;
+
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+
+  --seq-100: #cde2fb;
+  --seq-150: #b7d3f6;
+  --seq-200: #9ec5f4;
+  --seq-250: #86b6ef;
+  --seq-300: #6da7ec;
+  --seq-350: #5598e7;
+  --seq-400: #3987e5;
+  --seq-450: #2a78d6;
+  --seq-500: #256abf;
+  --seq-550: #1c5cab;
+  --seq-600: #184f95;
+  --seq-650: #104281;
+  --seq-700: #0d366b;
+
+  /* diverging per-capita ramp: 1=deepest "below average" (ozone), 7=deepest "above average" (infrared) */
+  --map-1: #1f5e50;
+  --map-2: #2e7d6b;
+  --map-3: #8ab6a9;
+  --map-neutral: #c7c9c1;
+  --map-5: #e2a86a;
+  --map-6: #b8552f;
+  --map-7: #5c1c11;
+  --map-ocean: #e2e5dd;
+
+  --brand-gradient: linear-gradient(90deg, #2e7d6b 0%, #c7c9c1 45%, #e8a33d 72%, #8a2e1e 100%);
+
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --header-h: 64px;
+  --radius: 8px;
+  --shadow-soft: 0 1px 2px rgba(28, 35, 32, 0.06), 0 4px 16px rgba(28, 35, 32, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page-plane: #171d1a;
+    --surface-1: #1c2320;
+    --surface-2: #262e2a;
+    --text-primary: #eef0ec;
+    --text-secondary: #b9c0b8;
+    --text-muted: #7c8580;
+    --gridline: #333c37;
+    --baseline: #454f49;
+    --border: #333c37;
+    --border-strong: #454f49;
+    --overlay-scrim: rgba(0, 0, 0, 0.6);
+
+    --accent: #e8a33d;
+    --accent-gold: #e8a33d;
+    --accent-cool: #4fae97;
+    --on-gold: #1c2320;
+
+    --graphite: #10140f;
+    --infrared: #d0603f;
+    --ozone: #4fae97;
+
+    --success: #4fae97;
+    --status-critical: #d0603f;
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+
+    --map-1: #3a9683;
+    --map-2: #4fae97;
+    --map-3: #5f7a70;
+    --map-neutral: #4a4f49;
+    --map-5: #a1673f;
+    --map-6: #c2582f;
+    --map-7: #ff8a5c;
+    --map-ocean: #12150f;
+
+    --brand-gradient: linear-gradient(90deg, #4fae97 0%, #4a4f49 45%, #e8a33d 72%, #d0603f 100%);
+    --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 28px -6px rgba(0, 0, 0, 0.55);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page-plane: #171d1a;
+  --surface-1: #1c2320;
+  --surface-2: #262e2a;
+  --text-primary: #eef0ec;
+  --text-secondary: #b9c0b8;
+  --text-muted: #7c8580;
+  --gridline: #333c37;
+  --baseline: #454f49;
+  --border: #333c37;
+  --border-strong: #454f49;
+  --overlay-scrim: rgba(0, 0, 0, 0.6);
+
+  --accent: #e8a33d;
+  --accent-gold: #e8a33d;
+  --accent-cool: #4fae97;
+  --on-gold: #1c2320;
+
+  --graphite: #10140f;
+  --infrared: #d0603f;
+  --ozone: #4fae97;
+
+  --success: #4fae97;
+  --status-critical: #d0603f;
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+
+  --map-1: #3a9683;
+  --map-2: #4fae97;
+  --map-3: #5f7a70;
+  --map-neutral: #4a4f49;
+  --map-5: #a1673f;
+  --map-6: #c2582f;
+  --map-7: #ff8a5c;
+  --map-ocean: #12150f;
+
+  --brand-gradient: linear-gradient(90deg, #4fae97 0%, #4a4f49 45%, #e8a33d 72%, #d0603f 100%);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 28px -6px rgba(0, 0, 0, 0.55);
+}
+
+/* Dyslexia-friendly mode: legible open font, generous spacing, no italics. */
+:root[data-dyslexic="true"] {
+  --font-display: "Atkinson Hyperlegible", sans-serif;
+  --font-sans: "Atkinson Hyperlegible", sans-serif;
+  --font-mono: "Atkinson Hyperlegible", sans-serif;
+}
+:root[data-dyslexic="true"] body {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  word-spacing: 0.16em;
+  line-height: 1.9;
+}
+:root[data-dyslexic="true"] em,
+:root[data-dyslexic="true"] i {
+  font-style: normal;
+  text-decoration: underline dotted;
+}
+:root[data-dyslexic="true"] .eyebrow {
+  letter-spacing: 0.04em !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--page-plane);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  /* Uniform ~15% zoom-out — scales text, spacing and charts together,
+     same effect as browser zoom at 85%, without touching every value. */
+  zoom: 0.85;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent-gold) 35%, transparent);
+}
+
+/* focus ring, keyboard-visible only */
+:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -64,6 +64,11 @@ atmosfer/
 │       ├── database.py
 │       ├── routers/
 │       └── services/
+├── frontend/                 # React + Vite dashboard, consumes the API above
+│   └── src/
+│       ├── api/
+│       ├── components/
+│       └── theme/
 ├── dbt/
 │   ├── dbt_project.yml
 │   ├── profiles.yml
@@ -82,18 +87,21 @@ atmosfer/
 
 - `stg_emissions` — the raw CSV, cast to proper types, filtered to rows with a country and a year. ~15 columns kept out of 79; the rest weren't relevant to the routes below.
 - `int_country_yearly_summary` — one row per country/year, with each emission source's share of that country's total CO2 for the year.
-- `int_global_yearly_totals` — world CO2/GHG totals per year, plus a count of reporting countries.
-- `mart_country_emissions` / `mart_global_emissions` — same shape as the two models above, materialized as tables for the API to hit directly.
+- `int_global_yearly_totals` — world CO2/GHG totals per year (sourced from OWID's own `World` row, not summed across every entity — the raw dataset also carries continents, income groups, and the `World` row itself as regular rows, so a naive `SUM` triple-counts), plus a count of reporting countries and a global sector breakdown.
+- `mart_country_emissions` / `mart_global_emissions` — same shape as the two models above, materialized as tables for the API to hit directly. `mart_country_emissions` carries `iso_code` (`NULL` for continents/income-group aggregates, populated for the 215 real countries) and the seven emission-source columns (coal, oil, gas, cement, flaring, other industry, land-use change).
 
 ## API
 
 | Route | Description |
 |---|---|
-| `GET /countries` | List of countries in the dataset |
-| `GET /emissions/{country}` | Yearly emissions for one country, optional `?date=YYYY` |
+| `GET /countries` | Real countries in the dataset (`{country, iso_code}`), aggregates excluded |
+| `GET /emissions/{country}` | Yearly emissions for one country, incl. per-sector breakdown; optional `?date=YYYY` |
 | `GET /global_emissions` | World CO2/GHG totals by year |
-| `GET /compare?countries=X&countries=Y` | Side-by-side CO2 by year for multiple countries |
-| `GET /top-countries?limit=N&since=YYYY` | Top N emitters, optionally restricted to years >= `since` |
+| `GET /global_emissions/sectors?year=YYYY` | World emissions broken down by sector for one year (latest if omitted) |
+| `GET /compare?countries=X&countries=Y&metric=co2` | Side-by-side metric by year for multiple countries; `metric` is any column in `services/metrics.py`'s whitelist (co2, total_ghg, a sector, methane, nitrous_oxide) |
+| `GET /top-countries?limit=N&since=YYYY&metric=co2` | Top N emitters by metric; summed across all years, or from `since` onward |
+| `GET /map?year=YYYY` | Per-capita + total emissions for every country, for a given year (latest if omitted) |
+| `GET /shares?year=YYYY` | Each country's CO2 for a given year, for share-of-global charts |
 
 ## Running it
 
@@ -125,9 +133,22 @@ cd backend/app && uvicorn main:app --reload
 
 Docs at `http://127.0.0.1:8000/docs`.
 
+### Frontend
+
+React + Vite dashboard (country/sector breakdowns, cross-country comparison, share-of-global donuts, top emitters, a per-capita world map). Needs the API above running on `http://localhost:8000` (CORS is already scoped to `http://localhost:5173`, Vite's default port).
+
+```bash
+cd frontend
+npm install --legacy-peer-deps   # react-simple-maps hasn't updated its React peer range for React 19 yet
+npm run dev
+```
+
+Open `http://localhost:5173`.
+
 ## Known limitations / what's not done
 
 - FastAPI isn't in docker-compose yet — it's the odd one out, still run manually. Next step is a proper Dockerfile for it and wiring it into the same network as everything else.
+- Frontend isn't containerized either, and its production bundle is ~750 kB (mostly Recharts + the map's topojson/d3 stack + three font families) — fine for `npm run dev`, but would be worth code-splitting (lazy-load the map) before actually deploying it.
 - No CI. Would want GitHub Actions running `dbt test` and a pytest suite against the API on every push.
 - No incremental loading — the ingestion script truncates and reloads the full CSV every run, which is fine at this data volume but wouldn't scale to a real streaming or high-frequency source.
 - File permissions between the host and the Airflow containers (UID 50000) need `chown` on `dbt/logs` and `dbt/target` the first time you run things locally outside Docker — a rough edge of mixing local dbt runs with containerized ones.

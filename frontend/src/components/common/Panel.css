@@ -1,0 +1,48 @@
+.panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.2s ease;
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--brand-gradient);
+  opacity: 0.7;
+}
+.panel:hover {
+  box-shadow: var(--shadow-soft);
+}
+
+/* Flatten the two ChartCards nested inside: the Panel supplies the
+   outer border/radius/top-strip, the cards just supply their content. */
+.panel > .chart-card {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.panel > .chart-card:hover {
+  box-shadow: none;
+}
+.panel > .chart-card + .chart-card {
+  border-left: 1px solid var(--border);
+}
+
+@media (max-width: 900px) {
+  .panel {
+    grid-template-columns: 1fr;
+  }
+  .panel > .chart-card + .chart-card {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}

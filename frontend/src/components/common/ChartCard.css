@@ -1,0 +1,120 @@
+.chart-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent-gold);
+  border-radius: var(--radius);
+  padding: 22px 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  transition: box-shadow 0.2s ease;
+}
+.chart-card:hover {
+  box-shadow: var(--shadow-soft);
+}
+
+.chart-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.chart-card__title {
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  margin-top: 4px;
+}
+
+.chart-card__desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  max-width: 52ch;
+}
+
+.chart-card__table-toggle {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.chart-card__table-toggle:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+.chart-card__table-toggle[aria-expanded="true"] {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent-gold) 60%, transparent);
+}
+
+.chart-card__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.chart-card__body {
+  min-width: 0;
+  transition: opacity 0.2s ease;
+}
+.chart-card__body.is-fetching {
+  opacity: 0.55;
+}
+
+.chart-card__error {
+  padding: 24px 0;
+  color: var(--status-critical);
+  font-size: 13px;
+}
+
+.chart-card__footnote {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--gridline);
+  padding-top: 12px;
+}
+
+.chart-card__table-wrap {
+  max-height: 320px;
+  overflow: auto;
+}
+
+.chart-card__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.chart-card__table th {
+  position: sticky;
+  top: 0;
+  background: var(--surface-1);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--gridline);
+}
+.chart-card__table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--gridline);
+  color: var(--text-secondary);
+}
+.chart-card__table tr:last-child td {
+  border-bottom: none;
+}

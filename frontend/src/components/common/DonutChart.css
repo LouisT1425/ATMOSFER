@@ -1,0 +1,32 @@
+.donut-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.donut-chart__plot {
+  position: relative;
+}
+
+.donut-chart__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.donut-chart__center-label {
+  max-width: 110px;
+}
+
+.donut-chart__center-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+}

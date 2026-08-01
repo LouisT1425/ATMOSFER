@@ -1,0 +1,45 @@
+.viz-legend {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.viz-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  padding: 3px 0;
+  cursor: default;
+}
+button.viz-legend__item:not(:disabled) {
+  cursor: pointer;
+}
+button.viz-legend__item:not(:disabled):hover {
+  color: var(--text-primary);
+}
+.viz-legend__item.is-muted {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.viz-legend__swatch {
+  flex-shrink: 0;
+  display: inline-block;
+}
+.viz-legend__swatch--rect {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.viz-legend__swatch--line {
+  width: 12px;
+  height: 2px;
+  border-radius: 1px;
+}
